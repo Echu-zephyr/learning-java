@@ -24,8 +24,8 @@ public class Main {
         // --- OUTPUT:  the result 
         System.out.println("\n>> ACCESS GRANTED.");
         System.out.println("WELCOME, " + playerName.toUpperCase());
-        System.out.println("VITAL SIGNS: [" + playerHealth + "%]");
-        System.out.println("ACCOUNT BALANCE: ₩" + techCredits);
+        System.out.println("Health: " + playerHealth + "%");
+        System.out.println("ACCOUNT BALANCE: $" + techCredits);
         
         // STEP 4: Close the scanner to save computer memory
         input.close();
