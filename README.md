@@ -30,4 +30,4 @@ Language: Java 17+
 
 Platform: Console-based / CLI
 
-Goal: 100% Core Java (No external dependencies)
+Goal: 100% Core Java 
