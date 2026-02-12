@@ -8,13 +8,14 @@ public class Main {
         Random dice = new Random();
 
         // --- SETUP ---
-        System.out.println(">> SYSTEM_OVERRIDE: NEON PROTOCOL");
+       System.out.println(">> SYSTEM_OVERRIDE: NEON PROTOCOL");
         System.out.println(">> INITIALIZING INTERACTIVE NEURAL LINK...");
-        System.out.println("-------------------------------------------");
+        System.out.println("-------------------------------------------"); 
         System.out.print("ENTER PILOT NAME: ");
         String playerName = input.nextLine(); 
 
         int playerHealth = 100;
+        int maxHealth = 100; // New: To allow health buffs
         double techCredits = 500.00;
         int level = 1;
         int successfulHacks = 0;
@@ -24,58 +25,61 @@ public class Main {
         System.out.println("\n>> WELCOME TO THE UNDERCITY, " + playerName.toUpperCase());
 
         while (isRunning) {
-            System.out.println("\n--- level: " + level + " | HP: " + playerHealth + "% | WALLET: $" + techCredits + " ---");
-            System.out.println("1. HACK Data-pad (Risk/Reward)");
-            System.out.println("2. VISIT the 'Neon Merchant' (Shop)");
+            System.out.println("\n--- [LEVEL " + level + "] | HP: " + playerHealth + "/" + maxHealth + " | WALLET: $" + techCredits + " ---");
+            System.out.println("1. ATTEMPT HACK (Higher Level = Higher Risk)");
+            System.out.println("2. NEON MERCHANT");
             System.out.println("3. LOG OUT");
-            System.out.print("SELECT OPTION: ");
+            System.out.print("ACTION: ");
             
             int choice = input.nextInt();
 
             if (choice == 1) {
-                // HACKING LOGIC
-                int chance = dice.nextInt(2); 
-                if (chance == 0) {
-                    System.out.println(">> ! ERROR ! Security ICE detected. -25 HP");
-                    playerHealth -= 15;
-                    techCredits -=50;
+                // DIFFICULTY SCALING: Higher level makes winning harder
+                // Level 1: 0 or 1 (50%). Level 5: 0, 1, 2, 3, 4, 5 (16% chance)
+                int difficulty = dice.nextInt(level + 1); 
+                
+                if (difficulty != 0) { // If you don't roll a 0, you fail
+                    int damage = 20 + (level * 5); // Damage increases with level
+                    System.out.println(">> ! ALERT ! Security tightened. -" + damage + " HP");
+                    playerHealth -= damage;
                 } else {
-                    System.out.println(">> ! SUCCESS ! Bypassed. +$200");
-                    techCredits += 150;
-                    playerHealth +=10;
+                    double reward = 200 * level; // Reward multiplies with level
+                    System.out.println(">> ! SUCCESS ! Data extracted. +$" + reward);
+                    techCredits += reward;
                     successfulHacks++;
                     
-                    // LEVEL UP LOGIC
                     if (successfulHacks >= 3) {
                         level++;
-                        playerHealth = 100; // Reset health on level up
-                        successfulHacks = 0; // Reset counter
-                        System.out.println(">> LEVEL UP! Rank " + level + " achieved. Systems Refreshed.");
+                        successfulHacks = 0;
+                        maxHealth += 20; // Leveling up gives you more total health!
+                        playerHealth = maxHealth; 
+                        System.out.println(">> LEVEL UP! Max HP increased to " + maxHealth);
                     }
                 }
             } else if (choice == 2) {
-                // THE SHOP
-                System.out.println("\n--- NEON MERCHANT ---");
-                System.out.println("1. Buy Med-Kit ($150) - Heals 30% ");
-                System.out.println("2. Back to Street");
-                System.out.print("BUY SOMETHING? ");
+                // ADVANCED SHOP
+                System.out.println("\n--- MERCHANT ---");
+                System.out.println("1. Small Med-Kit ($150) -> +30 HP");
+                System.out.println("2. Armor Plating ($500) -> +50 MAX HP");
+                System.out.println("3. Exit Shop");
                 int shopChoice = input.nextInt();
 
                 if (shopChoice == 1 && techCredits >= 150) {
                     techCredits -= 150;
-                    playerHealth += 30;
-                    if (playerHealth > 100) playerHealth = 100; // Cap health at 100
-                    System.out.println(">> Applied Med-Kit. Vital signs stabilized.");
-                } else if (shopChoice == 1) {
-                    System.out.println(">> Insufficient Credits. Merchant laughs at you.");
+                    playerHealth = Math.min(playerHealth + 30, maxHealth);
+                    System.out.println(">> Healed.");
+                } else if (shopChoice == 2 && techCredits >= 500) {
+                    techCredits -= 500;
+                    maxHealth += 50;
+                    playerHealth += 50;
+                    System.out.println(">> Armor upgraded.");
                 }
             } else if (choice == 3) {
                 isRunning = false;
             }
 
-            // GAME OVER CHECK
             if (playerHealth <= 0) {
-                System.out.println("\n>> VITAL SIGNS LOST. Game Over.");
+                System.out.println("\n>> FLATLINED. Final Level: " + level);
                 isRunning = false;
             }
         }
