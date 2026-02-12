@@ -38,9 +38,9 @@ public class Main {
 
         if (choice == 1) {
             System.out.println("\n>> HACKING INITIALIZED...");
-            System.out.println(">> SUCCESS. You found 150.50 Credits!");
+            System.out.println(">> SUCCESS. You found 150 Credits!");
             // Update the money box
-            techCredits = techCredits + 150.50;
+            techCredits = techCredits + 150;
         } else if (choice == 2) {
             System.out.println("\n>> You walk away. Safety is a rare luxury.");
             System.out.println(">> No risks taken, no rewards gained.");
