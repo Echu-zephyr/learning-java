@@ -19,7 +19,7 @@ public class Main {
         // --- PHASE 2: DATA modelling stuff
         // These are the "boxes" storing your character's state
         int playerHealth = 100;
-        double techCredits = 500.75;
+        double techCredits = 500.00;
 
         // --- OUTPUT:  the result 
         System.out.println("\n>> ACCESS GRANTED.");
