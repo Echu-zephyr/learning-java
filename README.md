@@ -14,16 +14,7 @@ Phase 4: Logic Gates – Branching narrative paths using conditional control flo
 
 Phase 5: Operational Logic – Utilizing arithmetic operators for game economy and status updates.
 
-Development Roadmap
-[ ] Phase 1: Entry Point (Status: Pending)
-
-[ ] Phase 2: Data Modeling (Status: Pending)
-
-[ ] Phase 3: Input Handling (Status: Pending)
-
-[ ] Phase 4: Conditional Logic (Status: Pending)
-
-[ ] Phase 5: State Arithmetic (Status: Pending)
+well here goess
 
 Environment & Build
 Language: Java 17+
